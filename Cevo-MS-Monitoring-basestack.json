@@ -18,7 +18,11 @@
         "03SubscriptionEndpoint":{
             "Type": "String",
             "Description": "Endpoint info: e-mail address for protocol mail, lambda arn for lambda, etc"
-        }   
+        },
+        "044xxErrorsApiName":{
+            "Type": "String",
+            "Default": "dev-api-graphql"
+        }
     },
     "Mappings": {
 
@@ -46,12 +50,21 @@
                     ],
                 "TopicName" : { "Ref": "01SNSTopicName" }
               }
-          }
-
+          },
+        "CevoMonitoring": {
+            "Type" : "AWS::CloudFormation::Stack",
+            "Properties" : {
+                "TemplateURL" : "https://github.com/CEVO-MatheusJGSantos/Cevo-MS-Monitoring/APIGateway/Cevo-MS-Monitoring-apigateway.json",
+                "TimeoutInMinutes" : 10
+            }
+        }
     },
     "Outputs": {
-        "CevoMonitoringSNSTopicOutput":{
-            "Value": {"Ref": "CevoMonitoringSNSTopic" } 
+        "CevoMonitoringSNSTopic":{
+            "Value": {"Ref": "CevoMonitoringSNSTopic"} 
+        },
+        "044xxErrorsApiName":{
+            "Value":{"Ref":"044xxErrorsApiName"}
         }
     }
 }

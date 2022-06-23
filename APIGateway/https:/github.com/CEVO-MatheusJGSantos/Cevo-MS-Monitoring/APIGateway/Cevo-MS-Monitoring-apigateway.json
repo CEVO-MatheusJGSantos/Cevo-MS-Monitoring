@@ -1,0 +1,46 @@
+{
+"AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "",
+    "Metadata": {
+
+    },
+    "Parameters": {
+    
+    },
+    "Mappings": {
+
+    },
+    "Conditions": {
+
+    },
+    "Resources": {
+        "CevoMonitoring4xErrors": {
+           "Type": "AWS::CloudWatch::Alarm",
+           "Properties": {
+              "MetricName": "4XXError",
+              "Namespace": "AWS/ApiGateway",
+              "ComparisonOperator": "GreaterThanUpperThreshold",
+              "EvaluationPeriods": "3",
+              "Period": 300,
+              "Stat": "p90",
+              "ActionsEnabled": true,
+              "AlarmActions": [ { "Ref": "CevoMonitoringSNSTopic" } ],
+              "AlarmDescription": "",
+              "AlarmName": "",
+              "Dimensions": [ 
+                {
+                    "Name": "ApiName",
+                    "Value": { "Ref": "044xxErrorsApiName"}
+                } 
+            ],
+              "InsufficientDataActions": [ "" ],
+              "OKActions": [ "" ],
+              "Unit": "Percent"
+           }
+        }
+       
+    },
+    "Outputs": {
+
+    }
+}
