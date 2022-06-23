@@ -1,0 +1,57 @@
+{
+"AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "",
+    "Metadata": {
+
+    },
+    "Parameters": {
+        "01SNSTopicName":{
+            "Type" : "String",
+            "Description" : "Name of the Monitoring SNS topic",
+            "Default": "CevoMonitoring-SNSTopic"
+        },
+        "02SubscriptionProtocol":{
+            "Type": "String",
+            "AllowedValues": ["http","https","email","lambda"],
+            "Default": "email"
+        },
+        "03SubscriptionEndpoint":{
+            "Type": "String",
+            "Description": "Endpoint info: e-mail address for protocol mail, lambda arn for lambda, etc"
+        }   
+    },
+    "Mappings": {
+
+    },
+    "Conditions": {
+
+    },
+    "Resources": { 
+        "CevoMonitoringSNSTopic":{
+            "Type" : "AWS::SNS::Topic",
+            "Properties" : {
+                "DisplayName" : { "Ref": "01SNSTopicName" },
+                "FifoTopic" : false,
+                "Subscription" : [ 
+                    { 
+                        "Protocol": { "Ref": "02SubscriptionProtocol" },
+                        "Endpoint": { "Ref": "03SubscriptionEndpoint" }
+                    }
+                 ],
+                "Tags" : [ 
+                    { 
+                        "Key": "Owner",
+                        "Value": "Cevo" 
+                    } 
+                    ],
+                "TopicName" : { "Ref": "01SNSTopicName" }
+              }
+          }
+
+    },
+    "Outputs": {
+        "CevoMonitoringSNSTopicOutput":{
+            "Value": {"Ref": "CevoMonitoringSNSTopic" } 
+        }
+    }
+}
